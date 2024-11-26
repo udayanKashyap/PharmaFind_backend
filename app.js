@@ -1,5 +1,6 @@
 const express = require("express");
 const userRouter = require("./src/routes/user.route");
+const pharmacyRouter = require("./src/routes/pharmacy.route");
 const catchAsync = require("./src/utils/errorHandler");
 const app = express();
 
@@ -11,6 +12,7 @@ app.get(
   }),
 );
 app.use("/user", userRouter);
+app.use("/pharmacy", catchAsync(pharmacyRouter));
 
 app.use((error, req, res, next) => {
   res.status(500).send({ message: error.message });
