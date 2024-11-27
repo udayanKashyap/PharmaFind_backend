@@ -1,6 +1,4 @@
-const {
-  scrap_oneMg: oneMgScrapper,
-} = require("../../utils/pharmacies/oneMgScrapper.js");
+const { oneMgScrapper } = require("../../utils/pharmacies/oneMgScrapper.js");
 
 async function getMedicinesOneMG(req, res) {
   const { medicine } = req.query;
