@@ -1,7 +1,13 @@
 const express = require("express");
-const { getMedicines } = require("../controllers/pharmacies/oneMG.controller");
+const {
+  getMedicinesOneMG,
+} = require("../controllers/pharmacies/oneMG.controller");
+const {
+  getMedicinesPharmEasy,
+} = require("../controllers/pharmacies/pharmEasy.controller");
 const router = express.Router();
 
-router.get("/", getMedicines);
+router.get("/oneMg/", getMedicinesOneMG);
+router.get("/pharmEasy/", getMedicinesPharmEasy);
 
 module.exports = router;

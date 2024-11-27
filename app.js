@@ -12,7 +12,7 @@ app.get(
   }),
 );
 app.use("/user", userRouter);
-app.use("/pharmacy", catchAsync(pharmacyRouter));
+app.use("/pharmacy", pharmacyRouter);
 
 app.use((error, req, res, next) => {
   res.status(500).send({ message: error.message });

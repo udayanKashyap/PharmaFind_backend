@@ -1,12 +1,14 @@
-const { scrap_oneMg } = require("../../utils/pharmacies/oneMgScrapper.js");
+const {
+  scrap_oneMg: oneMgScrapper,
+} = require("../../utils/pharmacies/oneMgScrapper.js");
 
-async function getMedicines(req, res) {
+async function getMedicinesOneMG(req, res) {
   const { medicine } = req.query;
   // console.log("medicine name: ", medicine);
-  const medicineList = await scrap_oneMg(medicine);
+  const medicineList = await oneMgScrapper(medicine);
   res.send(medicineList);
 }
 
 module.exports = {
-  getMedicines,
+  getMedicinesOneMG,
 };
