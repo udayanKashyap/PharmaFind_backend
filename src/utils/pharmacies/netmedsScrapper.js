@@ -32,7 +32,7 @@ const netmedsScrapper = async (medicine) => {
           price: priceElement ? priceElement.innerText : null,
           image: imageElement ? imageElement.src : null,
           packSize: packSizeElement ? packSizeElement : null,
-          deliveryElement: deliveryElement ? deliveryElement : null,
+          deliveryDate: deliveryElement ? deliveryElement : null,
           pharmacy: "netmeds",
         };
       });
