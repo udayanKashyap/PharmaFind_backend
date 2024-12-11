@@ -36,11 +36,11 @@ const oneMgScrapper = async (medicine) => {
         };
       });
   });
-  console.log("Medicines: ", medicineList);
+  // console.log("Medicines: ", medicineList);
 
-  await page.screenshot({
-    path: "bottom.png",
-  });
+  // await page.screenshot({
+  //   path: "bottom.png",
+  // });
   await browser.close();
   return medicineList;
 };

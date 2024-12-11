@@ -7,7 +7,6 @@ const app = express();
 app.get(
   "/",
   catchAsync(async (req, res) => {
-    throw new Error("err hpwn");
     res.send("Hello World");
   }),
 );

@@ -6,3 +6,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  address  String
+  password String
+  pincode  String
+  contact  String @db.VarChar(10)
+}
+
+model Search {
+  id        Int      @id @default(autoincrement())
+  query     String
+  pincode   String
+  createdAt DateTime @default(now())
+}
+
+model Pharmacy {
+  id      Int    @id @default(autoincrement())
+  name    String
+  pincode String
+  address String
+  contact String @db.VarChar(10)
+}
+
+model Products {
+  id    String @id @default(autoincrement())
+  name  String
+  price String
+  qq
+}

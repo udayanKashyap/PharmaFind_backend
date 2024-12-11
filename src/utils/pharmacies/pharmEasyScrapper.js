@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 
 const pharmEasyScrapper = async (medicine) => {
   const url = `https://pharmeasy.in/search/all?name=${medicine}`;
-  console.log(url);
+  // console.log(url);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);

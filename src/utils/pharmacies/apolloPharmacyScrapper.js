@@ -13,11 +13,11 @@ const apolloPharmacyScrapper = async (medicine) => {
     return Array.from(medicines)
       .splice(0, 3)
       .map((item) => {
-        const nameElement = item.querySelector(".WV");
+        const nameElement = item.querySelectorAll(".Gb")[0];
         const linkElement = item.querySelector("a");
-        const priceElement = item.querySelector(".Sf_");
-        const imageElement = item.querySelector(".LV").querySelector("img");
-        const packSizeElement = item.querySelectorAll(".Ed")[1];
+        const priceElement = item.querySelector(".sX");
+        const imageElement = item.querySelector(".jX")?.querySelector("img");
+        const packSizeElement = item.querySelectorAll(".Gb")[1];
         const deliveryElement = null;
 
         return {
@@ -31,7 +31,7 @@ const apolloPharmacyScrapper = async (medicine) => {
         };
       });
   });
-
+  console.log("Medicine List apollopharmacy: ", medicineList);
   await browser.close();
   return medicineList;
 };
