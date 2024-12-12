@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 const oneMgScrapper = async (medicine) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const url = `https://www.1mg.com/search/all?name=${medicine}&filter=true&sort=price_high`;
+  const url = `https://www.1mg.com/search/all?name=${medicine}`;
   await page.goto(url);
 
   const medicineList = await page.evaluate(async () => {
@@ -28,7 +28,9 @@ const oneMgScrapper = async (medicine) => {
         return {
           name: nameElement ? nameElement.innerText : null,
           link: linkElement ? linkElement.href : null,
-          price: priceElement ? priceElement.textContent : null,
+          price: priceElement
+            ? priceElement.textContent.replace(/[^0-9.]/g, "")
+            : null,
           image: imageElement ? imageElement.src : null,
           packSize: packSizeElement ? packSizeElement.innerText : null,
           deliveryDate: deliveryElement ? deliveryElement.innerText : null,

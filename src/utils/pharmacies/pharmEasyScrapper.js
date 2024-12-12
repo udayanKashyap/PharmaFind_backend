@@ -34,7 +34,9 @@ const pharmEasyScrapper = async (medicine) => {
         return {
           name: nameElement ? nameElement.innerText : null,
           link: linkElement ? linkElement.href : null,
-          price: priceElement ? priceElement.textContent : null,
+          price: priceElement
+            ? priceElement.textContent.replace(/[^0-9.]/g, "")
+            : null,
           image: imageElement ? imageElement.src : null,
           packSize: packSizeElement ? packSizeElement.innerText : null,
           deliveryDate: deliveryElement ? deliveryElement.innerText : null,

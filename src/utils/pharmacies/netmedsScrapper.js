@@ -19,7 +19,7 @@ const netmedsScrapper = async (medicine) => {
           .querySelector(".category_name")
           .querySelector(".clsgetname");
         const linkElement = item.querySelector(".category_name");
-        const priceElement = item.querySelector(".final-price");
+        const priceElement = item.querySelector(".price-box");
         const imageElement = item
           .querySelector(".category_name")
           .querySelector(".product-image-photo");
@@ -29,7 +29,9 @@ const netmedsScrapper = async (medicine) => {
         return {
           name: nameElement ? nameElement.innerText : null,
           link: linkElement ? linkElement.href : null,
-          price: priceElement ? priceElement.innerText : null,
+          price: priceElement
+            ? priceElement.innerText.replace(/[^0-9.]/g, "")
+            : null,
           image: imageElement ? imageElement.src : null,
           packSize: packSizeElement ? packSizeElement : null,
           deliveryDate: deliveryElement ? deliveryElement : null,
