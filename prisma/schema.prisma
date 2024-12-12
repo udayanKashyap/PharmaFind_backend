@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   name       String
-  address    String
+  address    String?
   password   String
-  location   String
-  contact_no String @db.VarChar(10)
+  location   String?
+  contact_no String  @db.VarChar(10)
+  email      String
 
   // relational fields
   searches Search[]
@@ -22,26 +23,26 @@ model User {
 model Search {
   id         Int      @id @default(autoincrement())
   query      String
-  location   String
+  location   String?
   created_at DateTime @default(now())
 
   // relational fields
-  redirects                Redirect[]
-  purchased_product        ProductPurchaseMapping @relation(fields: [productPurchaseMappingId], references: [id])
-  User                     User?                  @relation(fields: [userId], references: [id])
-  userId                   Int?
-  productPurchaseMappingId Int
+  redirects         Redirect[]
+  purchased_product Purchase?  @relation(fields: [purchase_id], references: [id])
+  User              User?      @relation(fields: [userId], references: [id])
+  userId            Int?
+  purchase_id       Int?
 }
 
 model Redirect {
   id                 Int      @id @default(autoincrement())
   url                String
-  purchased_quantity Int
+  purchased_quantity Int?
   created_at         DateTime @default(now())
 
   // relational fields
-  Search   Search? @relation(fields: [searchId], references: [id])
-  searchId Int?
+  Search   Search @relation(fields: [searchId], references: [id])
+  searchId Int
 }
 
 model Pharmacy {
@@ -54,40 +55,40 @@ model Pharmacy {
   license_no              String
 
   // relational fields
-  has_products ProductsPharmacyMapping[]
+  has_products Inventory[]
 }
 
 model Product {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   name         String
   manufacturer String
-  expiry       DateTime
-  manufactured DateTime
+  expiry       DateTime?
+  manufactured DateTime?
 
   // relational fields
-  purchased_by ProductPurchaseMapping[]
-  present_in   ProductsPharmacyMapping[]
+  purchased_by Purchase[]
+  present_in   Inventory[]
 }
 
-model ProductsPharmacyMapping {
+model Inventory {
   id       Int   @id @default(autoincrement())
   price    Float
-  quantity Int
+  quantity Int?
 
   // relational fields
-  Product    Product?  @relation(fields: [productId], references: [id])
-  productId  Int?
-  Pharmacy   Pharmacy? @relation(fields: [pharmacyId], references: [id])
-  pharmacyId Int?
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  Pharmacy   Pharmacy @relation(fields: [pharmacyId], references: [id])
+  pharmacyId Int
 }
 
-model ProductPurchaseMapping {
-  id       Int   @id @default(autoincrement())
-  price    Float
-  quantity Int
+model Purchase {
+  id       Int    @id @default(autoincrement())
+  price    Float?
+  quantity Int?
 
   // relational fields
   searched_by Search[]
-  Product     Product? @relation(fields: [productId], references: [id])
-  productId   Int?
+  Product     Product  @relation(fields: [productId], references: [id])
+  productId   Int
 }
