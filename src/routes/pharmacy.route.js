@@ -1,16 +1,17 @@
 const express = require("express");
-// const {
-//   getMedicinesOneMG,
-// } = require("../controllers/pharmacies/oneMG.controller");
-// const {
-//   getMedicinesPharmEasy,
-// } = require("../controllers/pharmacies/pharmEasy.controller");
-//
+const { catchAsync } = require("../utils/errorHandler")
 const { getMedicines } = require("../controllers/pharmacy.controller");
+const { registerPharmacy, getMedicine, addMedicine, getAllMedicine } = require("../controllers/offlinePharmacy.controller");
+const checkForbiddenMed = require("../middleware/forbiddenMedFilter.middleware");
 const router = express.Router();
 
-// router.get("/oneMg/", getMedicinesOneMG);
-// router.get("/pharmEasy/", getMedicinesPharmEasy);
-router.get("/all/", getMedicines);
+
+
+router.get("/all/", checkForbiddenMed, getMedicines);
+router.post("/registerPharma", registerPharmacy);
+router.get('/medicine', checkForbiddenMed, getMedicine);
+router.post('/medicine/add', addMedicine);
+router.get('/medicine/all', getAllMedicine);
+
 
 module.exports = router;

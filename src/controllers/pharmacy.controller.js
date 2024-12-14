@@ -1,6 +1,4 @@
-const {
-  apolloPharmacyScrapper,
-} = require("../utils/pharmacies/apolloPharmacyScrapper");
+
 const { netmedsScrapper } = require("../utils/pharmacies/netmedsScrapper");
 const { oneMgScrapper } = require("../utils/pharmacies/oneMgScrapper");
 const { pharmEasyScrapper } = require("../utils/pharmacies/pharmEasyScrapper");
@@ -13,11 +11,8 @@ async function getMedicines(req, res) {
     oneMgScrapper(medicine),
     pharmEasyScrapper(medicine),
     netmedsScrapper(medicine),
-    // apolloPharmacyScrapper(medicine),
   ]);
   result = sort_by_price(result.flat(), "ascending");
-  // await oneMgScrapper(medicine, browser);
-  // const result = await pharmEasyScrapper(medicine, browser2);
   console.timeEnd("startTime");
   res.send(result);
 }
