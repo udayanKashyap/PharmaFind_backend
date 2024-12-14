@@ -3,7 +3,7 @@ const userRouter = require("./src/routes/user.route");
 const pharmacyRouter = require("./src/routes/pharmacy.route");
 const catchAsync = require("./src/utils/errorHandler");
 const app = express();
-
+app.use(express.json())
 app.get(
   "/",
   catchAsync(async (req, res) => {
