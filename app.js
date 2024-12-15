@@ -4,6 +4,7 @@ const userRouter = require("./src/routes/user.route");
 const pharmacyRouter = require("./src/routes/pharmacy.route");
 const catchAsync = require("./src/utils/errorHandler");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,6 +14,7 @@ app.get(
     res.send("Hello World");
   }),
 );
+app.use(cookieParser())
 app.use(express.json());
 app.use("/user", userRouter);
 app.use("/pharmacy", pharmacyRouter);

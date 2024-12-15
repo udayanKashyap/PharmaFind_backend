@@ -2,8 +2,17 @@ const db = require("../db/prisma.js");
 const catchAsync = require("../utils/errorHandler.js");
 
 const addMedicine = async (req, res) => {
-    const { name, manufacturer, expiry, manufactured, qty, price, pharmacyId } =
+    const { pharmacyId } = req.user;
+    const { name, manufacturer, expiry, manufactured, qty, price } =
         req.body;
+
+
+    if (!pharmacyId) {
+        return res.status(401).json({
+            status: 'fail',
+            message: 'unauthorized request',
+        });
+    }
 
     try {
         const medicine = await db.product.create({
@@ -40,12 +49,12 @@ const addMedicine = async (req, res) => {
 };
 
 const getInventory = catchAsync(async (req, res) => {
-    const { pharmacyId } = req.body;
+    const { pharmacyId } = req.user;
 
     if (!pharmacyId) {
-        return res.status(400).json({
+        return res.status(401).json({
             status: 'fail',
-            message: 'Pharmacy ID is required.',
+            message: 'unauthorized request',
         });
     }
 
@@ -70,8 +79,17 @@ const getInventory = catchAsync(async (req, res) => {
 })
 
 const updateInventory = catchAsync(async (req, res) => {
-    const { productId, pharmacyId, qty, price } = req.body
-    if (!productId || !pharmacyId) {
+    const { pharmacyId } = req.user
+    const { productId, qty, price } = req.body
+
+    if (!pharmacyId) {
+        return res.status(401).json({
+            status: 'fail',
+            message: 'unauthorized request',
+        });
+    }
+
+    if (!productId) {
         return res.status(400).json({
             status: 'fail',
             message: 'Product ID and Pharmacy ID are required.',
