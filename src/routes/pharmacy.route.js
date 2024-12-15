@@ -1,10 +1,10 @@
 const express = require("express");
 const { getMedicines } = require("../controllers/pharmacy.controller");
 const {
-  registerPharmacy,
-  getMedicine,
-  addMedicine,
-  getAllMedicine,
+    registerPharmacy,
+    getMedicine,
+    addMedicine,
+    getAllMedicine,
 } = require("../controllers/offlinePharmacy.controller");
 const checkForbiddenMed = require("../middleware/forbiddenMedFilter.middleware");
 const router = express.Router();
