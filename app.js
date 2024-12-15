@@ -1,4 +1,5 @@
 const express = require("express");
+const redirectRouter = require("./src/routes/redirect.route");
 const userRouter = require("./src/routes/user.route");
 const pharmacyRouter = require("./src/routes/pharmacy.route");
 const catchAsync = require("./src/utils/errorHandler");
@@ -12,8 +13,10 @@ app.get(
     res.send("Hello World");
   }),
 );
+app.use(express.json());
 app.use("/user", userRouter);
 app.use("/pharmacy", pharmacyRouter);
+app.use("/redirects", redirectRouter);
 
 app.use((error, req, res, next) => {
   res.status(500).send({ message: error.message, stack: error.stack });

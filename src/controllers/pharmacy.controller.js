@@ -94,6 +94,21 @@ function sort_by_price(array, order) {
   });
 }
 
+/**
+ * Stores the search query int the database
+ * @param {string} query - The search query provided by the user
+ * @returns - The datbase object that was created
+ */
+async function store_search(query) {
+  const prisma = new PrismaClient();
+  const search = await prisma.search.create({
+    data: {
+      query: query,
+    },
+  });
+  return search;
+}
+
 module.exports = {
   getMedicines,
 };
