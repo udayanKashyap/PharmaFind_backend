@@ -1,5 +1,4 @@
 const express = require("express");
-const catchAsync = require("../utils/errorHandler");
 const { getMedicines } = require("../controllers/pharmacy.controller");
 const {
   registerPharmacy,
@@ -10,7 +9,7 @@ const {
 const checkForbiddenMed = require("../middleware/forbiddenMedFilter.middleware");
 const router = express.Router();
 
-router.get("/all/", getMedicines);
+router.get("/all", getMedicines);
 router.post("/registerPharma", registerPharmacy);
 router.get("/medicine", checkForbiddenMed, getMedicine);
 router.post("/medicine/add", addMedicine);
