@@ -55,8 +55,6 @@ const loginPharmacy = async (req, res) => {
 
     res.cookie('authToken', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -65,6 +63,20 @@ const loginPharmacy = async (req, res) => {
         pharmacy,
     });
 };
+
+const logoutPharmacy = async (req, res) => {
+    try {
+        res.clearCookie('authToken', {
+            httpOnly: true,
+            sameSite: 'strict',
+        });
+
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        console.error('Error during logout:', error);
+        res.status(500).json({ error: 'Error during logout' });
+    }
+}
 
 const getPharmacyDetails = async (req, res) => {
     const { pharmacyId } = req.user;
@@ -109,5 +121,6 @@ module.exports = {
     registerPharmacy,
     getAllMedicine,
     loginPharmacy,
-    getPharmacyDetails
+    getPharmacyDetails,
+    logoutPharmacy
 };
