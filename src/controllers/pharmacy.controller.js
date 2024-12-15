@@ -8,8 +8,8 @@ async function getMedicines(req, res) {
 
   console.time("startTime");
   let result = await Promise.all([
-    oneMgScrapper(medicine),
-    pharmEasyScrapper(medicine),
+    // oneMgScrapper(medicine),
+    // pharmEasyScrapper(medicine),
     netmedsScrapper(medicine),
   ]);
   result = sort_by_price(result.flat(), "ascending");
