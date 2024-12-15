@@ -1,5 +1,4 @@
 const express = require("express");
-const { catchAsync } = require("../utils/errorHandler");
 const { getMedicines } = require("../controllers/pharmacy.controller");
 const {
   registerPharmacy,

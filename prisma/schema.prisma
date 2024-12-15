@@ -49,7 +49,6 @@ model Pharmacy {
   id                      Int      @id @default(autoincrement())
   name                    String
   location                String
-  home_delivery_locations String[]
   contact_no              String
   email                   String
   license_no              String

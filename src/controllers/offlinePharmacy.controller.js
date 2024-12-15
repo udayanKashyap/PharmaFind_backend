@@ -1,20 +1,12 @@
 const db = require("../db/prisma.js");
 
 const registerPharmacy = async (req, res) => {
-  const {
-    name,
-    location,
-    home_delivery_locations,
-    contact_no,
-    email,
-    license_no,
-  } = req.body;
+  const { name, location, contact_no, email, license_no } = req.body;
 
   const newPharmacy = await db.pharmacy.create({
     data: {
       name,
       location,
-      home_delivery_locations,
       contact_no,
       email,
       license_no,
@@ -186,4 +178,3 @@ module.exports = {
   addMedicine,
   getAllMedicine,
 };
-
