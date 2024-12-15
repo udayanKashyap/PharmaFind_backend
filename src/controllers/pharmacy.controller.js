@@ -3,7 +3,7 @@ const { netmedsScrapper } = require("../utils/pharmacies/netmedsScrapper");
 const { oneMgScrapper } = require("../utils/pharmacies/oneMgScrapper");
 const { pharmEasyScrapper } = require("../utils/pharmacies/pharmEasyScrapper");
 const db = require("../db/prisma.js");
-const bloom = require("../utils/forbiddenMedicine.js")
+const bloom = require("../utils/forbiddenMedicine.js");
 
 const getMedicines = catchAsync(async (req, res) => {
   const { medicine, location, userId } = req.query;
@@ -54,7 +54,7 @@ const getMedicines = catchAsync(async (req, res) => {
   });
 
   let medicines = [];
-  if (pharmacies.length > 0)
+  if (pharmacies.length > 0 && product)
     medicines = await db.inventory.findMany({
       where: {
         productId: product.id,
