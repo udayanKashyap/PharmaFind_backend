@@ -17,7 +17,7 @@ const adduser = catchAsync(async (req, res) => {
       pincode,
       email,
       location,
-      contact_no: "6901775738",
+      contact_no,
     },
   });
   res.send({ message: "User created successfully" });

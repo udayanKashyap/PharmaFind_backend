@@ -3,9 +3,25 @@ const { netmedsScrapper } = require("../utils/pharmacies/netmedsScrapper");
 const { oneMgScrapper } = require("../utils/pharmacies/oneMgScrapper");
 const { pharmEasyScrapper } = require("../utils/pharmacies/pharmEasyScrapper");
 const db = require("../db/prisma.js");
+const bloom = require("../utils/forbiddenMedicine.js")
 
 const getMedicines = catchAsync(async (req, res) => {
-  const { medicine, location } = req.query;
+  const { medicine, location, userId } = req.query;
+
+  if (bloom.has(medicine.toLowerCase())) {
+    return res.status(400).send({
+      message: `${medicine} is a forbidden medicine and cannot be searched.`,
+    });
+  }
+
+  const searchEntry = await db.search.create({
+    data: {
+      query: medicine,
+      location: location,
+      userId: userId ? parseInt(userId) : null,
+    },
+  });
+
   const pharmacies = await db.pharmacy.findMany({
     where: {
       location: {
@@ -66,10 +82,11 @@ const getMedicines = catchAsync(async (req, res) => {
   let result = await Promise.all([
     oneMgScrapper(medicine),
     pharmEasyScrapper(medicine),
-    // netmedsScrapper(medicine),
+    netmedsScrapper(medicine),
   ]);
   result = sort_by_price(result.flat(), "ascending");
   res.send({
+    searchId: searchEntry.id,
     offline: medicines,
     online: result,
   });
