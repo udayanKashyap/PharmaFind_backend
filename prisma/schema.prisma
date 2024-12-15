@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   name       String
   address    String?
   password   String
   location   String?
-  contact_no String  @db.VarChar(10)
+  contact_no String   @db.VarChar(10)
   email      String
-
+  pincode    String
   // relational fields
-  searches Search[]
+  searches   Search[]
 }
 
 model Search {
