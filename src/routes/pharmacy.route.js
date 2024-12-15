@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 
-router.get("/all/", checkForbiddenMed, getMedicines);
+router.get("/all/", getMedicines);
 router.post("/registerPharma", registerPharmacy);
 router.get('/medicine', checkForbiddenMed, getMedicine);
 router.post('/medicine/add', addMedicine);

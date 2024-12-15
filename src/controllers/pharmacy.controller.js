@@ -1,4 +1,6 @@
-
+const {
+  apolloPharmacyScrapper,
+} = require("../utils/pharmacies/apolloPharmacyScrapper");
 const { netmedsScrapper } = require("../utils/pharmacies/netmedsScrapper");
 const { oneMgScrapper } = require("../utils/pharmacies/oneMgScrapper");
 const { pharmEasyScrapper } = require("../utils/pharmacies/pharmEasyScrapper");
@@ -10,7 +12,7 @@ async function getMedicines(req, res) {
   let result = await Promise.all([
     oneMgScrapper(medicine),
     pharmEasyScrapper(medicine),
-    netmedsScrapper(medicine),
+    // netmedsScrapper(medicine),
   ]);
   result = sort_by_price(result.flat(), "ascending");
   console.timeEnd("startTime");
