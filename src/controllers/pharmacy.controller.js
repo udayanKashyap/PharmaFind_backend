@@ -21,6 +21,7 @@ const getMedicines = catchAsync(async (req, res) => {
       userId: userId ? parseInt(userId) : null,
     },
   });
+  console.log("Search Entry Created: ", searchEntry);
 
   const pharmacies = await db.pharmacy.findMany({
     where: {
@@ -35,6 +36,7 @@ const getMedicines = catchAsync(async (req, res) => {
       location: true,
     },
   });
+  console.log("Pharmacies Found: ", pharmacies);
 
   const product = await db.product.findFirst({
     where: {
@@ -52,9 +54,10 @@ const getMedicines = catchAsync(async (req, res) => {
       manufacturer: true,
     },
   });
+  console.log("Product Found: ", product);
 
   let medicines = [];
-  if (pharmacies.length > 0 && product)
+  if (pharmacies.length > 0 && product) {
     medicines = await db.inventory.findMany({
       where: {
         productId: product.id,
@@ -79,18 +82,25 @@ const getMedicines = catchAsync(async (req, res) => {
         },
       },
     });
+  }
+  console.log("Offline Medicines Found: ", medicines);
+
   let result = await Promise.all([
     oneMgScrapper(medicine),
     pharmEasyScrapper(medicine),
     netmedsScrapper(medicine),
   ]);
   result = sort_by_price(result.flat(), "ascending");
+  console.log("Online Medicines Found: ", result);
+
   res.send({
     searchId: searchEntry.id,
     offline: medicines,
     online: result,
   });
 });
+
+module.exports = { getMedicines };
 
 /**
  * Returns the array after sorting it according to the price
